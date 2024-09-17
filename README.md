@@ -35,7 +35,7 @@ Firmware Analyzer is a Python-based tool designed to analyze firmware images for
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/yourusername/firmware-analyzer.git
+   git clone https://github.com/sscafi/firmware-analyzer.git
    cd firmware-analyzer
 
 ## Usage
