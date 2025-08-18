@@ -51,7 +51,7 @@ A comprehensive Python-based tool for analyzing firmware images, performing stat
 
 ### Clone Repository
 ```bash
-git clone https://github.com/your-username/firmware-analyzer.git
+git clone https://github.com/sscafi/firmware-analyzer.git
 cd firmware-analyzer
 ```
 
@@ -435,7 +435,7 @@ We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.
 ### Development Setup
 
 ```bash
-git clone https://github.com/your-username/firmware-analyzer.git
+git clone https://github.com/sscafi/firmware-analyzer.git
 cd firmware-analyzer
 
 # Create virtual environment
