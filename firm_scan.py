@@ -138,13 +138,22 @@ class FirmwareAnalyzer:
                 # Fallback to binwalk
                 command_used = ['binwalk', '-e', '-M', '-C', str(self.extracted_path.parent), str(self.firmware_path)]
             
-            with self._timeout_context(self.config.timeout):
+            # Use subprocess timeout (cross-platform) instead of signal.SIGALRM
+            try:
                 result = subprocess.run(
-                    command_used, 
-                    capture_output=True, 
-                    text=True, 
-                    check=True
+                    command_used,
+                    capture_output=True,
+                    text=True,
+                    check=True,
+                    timeout=self.config.timeout
                 )
+            except subprocess.TimeoutExpired as e:
+                logger.error(f"Extraction timed out: {e}")
+                self.results['extraction'] = {
+                    'success': False,
+                    'error': f'Timeout after {self.config.timeout} seconds'
+                }
+                return False
             
             self.results['extraction'] = {
                 'success': True,

@@ -1,44 +1,44 @@
 # Enhanced Firmware Analyzer
+## Quick Start
 
-[![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+### Command Line Usage
+```bash
+# Basic analysis
+python firm_scan.py firmware.bin
 
-A comprehensive Python-based tool for analyzing firmware images, performing static security analysis, and generating detailed reports. This enhanced version provides improved performance, better error handling, and extensive vulnerability scanning capabilities.
+# Advanced analysis with custom settings
+python firm_scan.py firmware.bin \
+  --workers 8 \
+  --timeout 600 \
+  --format both
 
-## Table of Contents
+# Help
+python firm_scan.py --help
+```
 
-- [Features](#features)
-- [Installation](#installation)
-- [Quick Start](#quick-start)
-- [Usage](#usage)
-- [Configuration](#configuration)
-- [Analysis Methods](#analysis-methods)
-- [Output Formats](#output-formats)
-- [Dependencies](#dependencies)
-- [Contributing](#contributing)
-- [License](#license)
+### Python API Usage
+```python
+from firm_scan import FirmwareAnalyzer, AnalysisConfig
 
-## Features
+# Basic usage
+analyzer = FirmwareAnalyzer('firmware.bin')
+success = analyzer.run_analysis()
 
-### Core Analysis Capabilities
-- **Intelligent Firmware Extraction**: Supports SquashFS, JFFS2, UBI, ZIP, 7-zip with automatic format detection
-- **Advanced String Analysis**: Categorized pattern matching for credentials, network artifacts, cryptographic materials, and commands
-- **ELF Security Analysis**: Comprehensive binary analysis including security feature detection (NX bit, stack canaries, PIE, RELRO)
-- **Multi-Source Vulnerability Scanning**: Integration with NVD, OSV, and CVE databases
-- **File Type Classification**: Automated file type detection and categorization
-- **Cryptographic Material Detection**: Certificate analysis and key extraction
-- **Configuration Security Review**: Analysis of config files for security misconfigurations
-- **Hash-based Integrity Verification**: MD5, SHA256 checksums for all files
+# Advanced configuration
+config = AnalysisConfig(
+  max_workers=8,
+  timeout=600,
+  output_format='both',
+  enable_emulation=True
+)
 
-### Performance & Reliability
-- **Parallel Processing**: Multi-threaded analysis for improved performance
-- **Timeout Protection**: Configurable timeouts to prevent hanging operations
-- **Memory Efficient**: Optimized for large firmware images
-- **Comprehensive Logging**: Detailed logging with configurable levels
-- **Error Recovery**: Graceful handling of corrupted or malformed files
+analyzer = FirmwareAnalyzer('firmware.bin', config)
+results = analyzer.run_analysis()
 
-### Reporting & Output
-- **Dual Format Reports**: JSON and PDF report generation
+# Access results
+print(f"Found {len(analyzer.results['elf_analysis'])} ELF files")
+print(f"Identified {len(analyzer.results['vulnerabilities']['nvd'])} potential vulnerabilities")
+```
 - **Structured Results**: Organized, searchable analysis results
 - **Progress Tracking**: Real-time analysis progress indication
 - **Metadata Tracking**: Version control and analysis timestamps
@@ -432,7 +432,7 @@ tail -f firmware_analysis.log
 
 We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.md) for details.
 
-### Development Setup
+# Development Setup
 
 ```bash
 git clone https://github.com/sscafi/firmware-analyzer.git
@@ -444,15 +444,15 @@ source venv/bin/activate  # Linux/Mac
 # or
 venv\Scripts\activate     # Windows
 
-# Install development dependencies
-pip install -r requirements-dev.txt
+# Install dependencies
+pip install -r requirements.txt
 
-# Run tests
-python -m pytest tests/
+# Run tests (if provided)
+python -m pytest tests/ || echo "No tests found"
 
 # Run linting
-flake8 firmware_analyzer.py
-black firmware_analyzer.py
+flake8 firm_scan.py
+black firm_scan.py
 ```
 
 ## License
