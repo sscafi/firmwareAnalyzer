@@ -263,7 +263,7 @@ It creates an easy-to-read report (JSON or PDF) with:
 - Companies like HackerOne may provide firmware for testing
 - Always follow responsible disclosure guidelines
 
----
+----
 
 ### Option 6: Public IoT Device Sources
 
